@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <title>This</title>
+  </head>
+  <body>
+    <script>
+      function identifyYourself(){
+        name = "identifyYourself";
+        console.log(this.name);
+      }
+      
+      var obj = {
+        name: "obj",
+        identifyYourself: identifyYourself
+      };
+      var x = {};
+      x.name = "x";
+            
+      identifyYourself(); // identifyYourself
+      obj.identifyYourself(); // obj
+      identifyYourself.apply(x,null); // x
+    </script>
+  </body>
+</html>

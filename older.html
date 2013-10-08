@@ -1,0 +1,436 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Bare Metal JavaScript</title>
+    
+    <meta name="description" content="JavaScript frameworks and libraries are great - and you should use them - but to use them well you must understand plain-old-javascript" />
+    <meta name="author" content="Adam Colton" />
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+    <link href="css/impress-demo.css" rel="stylesheet" />
+    <link href="css/poj.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/highlight/default.css">
+    
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+</head>
+
+<body class="impress-not-supported">
+
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+
+<div id="impress">
+    <div class="step slide" data-x="0" data-y="0">
+        <h1>Bare Metal JavaScript Patterns</h1>
+        <img src='bearMetal.jpg' id="bearMetal" />
+        <div class="bottom">
+          <p>Adam Colton</p>
+          <p><a href='http://www.adamcolton.net'>www.adamcolton.net</a></p>
+          <p>adamcolton@gmail.com</p>
+        </div>
+    </div>
+    
+    <div class="step slide" data-x="1000" data-y="0">
+      <p>Target Audience</p>
+      <ul>
+        <li>Comfortable with JavaScript</li>
+        <li>Write JavaScript</li>
+      </ul>
+      <br />
+      <p>Goal</p>
+      <ul>
+        <li>Better Understand the language</li>
+        <li>Look for solutions in the language first</li>
+      </ul>
+      <br />
+      <p>Please De-rail Me</p>
+      <ul>
+        <li>I'm going to skip most Demos</li>
+        <li>Interaction is better than monolog</li>
+        <li>Everything is up online</li>
+      </ul>
+    </div>
+    
+    <div class="step slide" data-x="2000" data-y="0">
+      <p>JavaScript libraries and frameworks are powerful.</p>
+    </div>
+
+    <div class="step slide" data-x="3000" data-y="0">
+      <p>But JavaScript is</p>
+      <ul>
+        <li>Powerful</li>
+        <li>More standardized than ever before</li>
+        <li>Something you should know</li>
+      </ul>
+    </div>
+    
+    <div class="step slide" data-x="0" data-y="900">
+      <h1>Part 1: Functions</h1>
+    </div>
+    
+    <div class="step slide" data-x="1000" data-y="900">
+      <p>Basic Functions</p>
+<pre><code language='javascript'>function square(x){
+  return x*x;
+}
+
+var cube = function(x){
+  return x*x*x;
+}
+
+document.write(square(10));</code></pre>
+      <a href='functionDemo1.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    
+    
+    <div class="step slide" data-x="2000" data-y="900">
+      <p>Optional Argument</p>
+<pre><code language='javascript'>var SayHello = function(name){
+  var hello = "Hello";
+  if ( name !== undefined ){
+    hello += ", my name is " + name;
+  }
+  alert(hello);
+}
+
+SayHello(); // Hello
+SayHello("Joe"); //Hello, my name is Joe</code></pre>
+      <a href='functionDemo3.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="3000" data-y="900">
+      <p>Arguments Object</p>
+<pre><code language='javascript'>var sum = function(){
+  var l = arguments.length;
+  var sum = 0;
+  var i;
+  for (i=0; i&lt;l; i += 1){
+    sum += arguments[i];
+  }
+  return sum;
+}
+
+alert(sum(1,2,3,4,5));</code></pre>
+      <a href='functionDemo4.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="4000" data-y="900">
+      <p>Declare and Execute</p>
+<pre><code language='javascript'>(function(){
+  var alertText = "not in global space";
+  alert(alertText);
+}());</code></pre>
+      <a href='functionDemo2.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="5000" data-y="900">
+      <p>Scope</p>
+<pre><code language='javascript'>var n = 5;
+(function(){
+  for(var i=0; i<10; i += 1){
+    var j = i*n;
+  }
+  
+  document.write(i +", " + j);
+}());</code></pre>
+      <a href='functionScopeDemo.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="6000" data-y="900">
+      <p>Scope - This is Better</p>
+<pre><code language='javascript'>var n = 5;
+(function(){
+  var i,j;
+  var local_n = n;
+  for(i=0; i<10; i += 1){
+    j = i*local_n;
+  }
+}());</code></pre>
+      <ul>
+        <li>Variable declaration at top of scope</li>
+        <li>Scope can be expensive</li>
+      </ul>
+    </div>
+    
+    <div class="step slide" data-x="0" data-y="1800">
+        <h1>Part 2: Objects</h1>
+    </div>
+    
+    <div class="step slide" data-x="1000" data-y="1800">
+      <p>Basic Object</p>
+<pre><code language='javascript'>var foo = {
+  attribute: "I am an attribute",
+  method: function(x){
+    return x*x;
+  }
+};
+document.writeln(foo.attribute + ", ");
+document.writeln(foo['attribute'] + ", ");
+document.writeln(foo.method(4));</code></pre>
+      <a href='objectDemo1.html' target="_blank" class='demolink'>Demo</a>
+      <p>Note: Creates an object, not a class</p>
+    </div>
+    
+    <div class="step slide" data-x="2000" data-y="1800">
+      <p>Constructor Function</p>
+<pre><code language='javascript'>function Person(name){
+  this.name = name;
+}
+
+var bob = new Person("Bob");
+document.write(bob.name);</code></pre>
+      <a href='objectDemo2.html' target="_blank" class='demolink'>Demo</a>
+      <ul>
+        <li>new</li>
+        <li>this</li>
+      </ul>
+    </div>
+    
+    <div class="step slide" data-x="3000" data-y="1800">
+      <p>Basic Prototype</p>
+        <pre><code language='javascript'>function Person(name){
+  this.name = name;
+}
+
+Person.prototype.sayHello = function(){
+  alert("Hello, my name is " + this.name);
+}
+
+var joe = new Person("Joe");
+joe.sayHello();</code></pre>
+      <a href='prototypeDemo.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+
+<div class="step slide" data-x="4000" data-y="1800">
+      <p>For...In</p>
+        <pre><code language='javascript'>function Person(name, age){
+  this.name = name;
+  this.age = age;
+}
+
+Person.prototype.species = "human";
+
+Person.prototype.displayOwnProperties = function(){
+  var dispArr;
+  for(property in this){
+    if (this.hasOwnProperty(property)){
+      dispArr = [property, ": ", this[property], "&lt;br /&gt;"];
+      document.write( dispArr.join("") );
+    }
+  }
+}
+
+var bob = new Person("Bob", 29);
+bob.displayOwnProperties();</code></pre>
+      <a href='forInDemo.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="5000" data-y="1800">
+      <p>This</p>
+        <pre><code language='javascript'>function identifyYourself(){
+  name = "identifyYourself";
+  alert(this.name);
+}
+
+var obj = {
+  name: "obj",
+  identifyYourself: identifyYourself
+};
+
+var x = {};
+x.name = "x";
+      
+identifyYourself(); // identifyYourself
+obj.identifyYourself(); // obj
+identifyYourself.apply(x); // x</code></pre>
+      <a href='thisDemo.html' target="_blank" class='demolink'>Demo</a>
+      <ul>
+        <li>Callbacks</li>
+        <li>Events</li>
+      </ul>
+    </div>
+    
+    <div class="step slide" data-x="0" data-y="2700">
+        <h1>Part 3: Closures</h1>
+    </div>
+    
+    <div class="step slide" data-x="1000" data-y="2700">
+      <p>Basic Closure</p>
+<pre><code language='javascript'>function Foo(x){
+  this.getX = function(){ return x; }
+}
+
+var bar = new Foo(5);
+alert(bar.getX());</code></pre>
+      <a href='closureDemo.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="2000" data-y="2700">
+      <p>Getter Setter</p>
+<pre><code language='javascript'>function GetterSetter(){
+  var x = 0;
+  this.get = function(){ return x; }
+  this.set = function(setX){
+    if (typeof(setX) === "number" && setX >= 0){
+      x = setX;
+    }
+  }
+}
+
+var gs = new GetterSetter();
+gs.set(10);
+document.write(gs.get() + ", ");
+gs.set(5);
+document.write(gs.get() + ", ");
+gs.set(-1);
+document.write(gs.get());</code></pre>
+      <a href='closureGetterSetterDemo.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="3000" data-y="2700">
+      <p>Object Builder</p>
+<pre><code language='javascript'>var Person = function(name){
+  var self = {
+    name: function(){
+      return name;
+    }
+  };
+  return self;
+}
+
+var bob = Person("Bob");
+alert(bob.name());</code></pre>
+      <a href='objectBuilder.html' target="_blank" class='demolink'>Demo</a>
+      <a href='logicDemo.html' target="_blank" class='demolink'>Advanced</a>
+    </div>
+    
+    <div class="step slide" data-x="0" data-y="3600">
+      <h1>Part 4: Document</h1>
+    </div>
+    
+    <div class="step slide" data-x="1000" data-y="3600">
+      <p>QuerySelector and QuerySelectorAll</p>
+<pre><code language='html'>&lt;div id='hello'&gt;
+  &lt;p&gt;Hello&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id='people'&gt;
+  &lt;p&gt;Bob&lt;/p&gt;
+  &lt;p&gt;Joe&lt;/p&gt;
+  &lt;p&gt;Lauren&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Twas brillig, and the slithy toves&lt;/p&gt;</code></pre><pre><code language='javascript'>
+var hello = document.querySelector("#hello");
+var people = document.querySelector("#people");
+var allParagraphs = document.querySelectorAll("p");
+var peopleParagraphs = people.querySelectorAll("p");
+</code></pre>
+      <a href='querySelectorDemo.html' target="_blank" class='demolink'>Demo</a>
+      <ul>
+        <li>Faster than jQuery</li>
+        <li>Supports most jQuery/CSS selectors</li>
+        <li>Widely Supported (IE8.0+, FF3.5+, CH4.0+) <a href='http://caniuse.com/queryselector' target='_blank'>support</a></li>
+      </ul>
+    </div>
+    
+    <div class="step slide" data-x="2000" data-y="3600">
+      <p>getElementById</p>
+<pre><code language='javascript'>var hello = document.getElementById("hello");</code></pre>
+      <ul>
+        <li>Faster than QuerySelector and jQuery</li>
+        <li>Basically supported everywhere</li>
+      </ul>
+    </div>
+    
+    <div class="step slide" data-x="3000" data-y="3600">
+      <p>getElementsByClassName</p>
+<pre><code language='javascript'>var theList = document.getElementById("theList");
+var liNodeList = document.getElementsByClassName("person");
+alert(liNodeList.length);
+
+var demoButton = document.getElementById('demoButton');
+demoButton.onclick = liveNodeListDemoFunction;
+
+var addLi = "&lt;li class='person'&gt;Some other person&lt;/li&gt;";
+function liveNodeListDemoFunction(){
+  theList.innerHTML += addLi;
+  alert(liNodeList.length);
+}</code></pre>
+      <a href='liveNodeListDemo.html' target="_blank" class='demolink'>Demo</a>
+      <ul>
+        <li>Returns a live node list</li>
+        <li>So does getElementsByTagName</li>
+      </ul>
+    </div>
+    
+    <div class="step slide" data-x="0" data-y="4500">
+      <h1>Part 5: Window</h1>
+    </div>
+    
+    <div class="step slide" data-x="1000" data-y="4500">
+      <p class='center'>Window is global scope</p>
+    </div>
+    
+    <div class="step slide" data-x="2000" data-y="4500">
+      <p>Window.onload</p>
+<pre><code language='javascript'>window.onload = function(){
+  var body = document.getElementById("body");
+  body.innerHTML = "Hello, World!";
+}</code></pre>
+      <a href='windowOnLoadDemo.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="0" data-y="5400">
+      <h1>Closing</h1>
+    </div>
+    
+    <div class="step slide" data-x="1000" data-y="5400">
+      <p>jQuery</p><br />
+      <p>The Cost</p>
+      <ul>
+        <li>81kB minified, 32kB gzipped</li>
+        <li>HTTP Request</li>
+        <li>DNS lookup (if using cached)</li>
+        <li>Parsing (4J ~ 5 minutes on standby)</li>
+      </ul><br />
+      <p>So when should I use jQuery?</p>
+      <ul>
+        <li>Selectors and Initilization - don't</li>
+        <li>Mobile - maybe</li>
+        <li>Ajax, promise/deferred or UI - do</li>
+      </ul>
+    </div>
+    
+    <div class="step slide" data-x="2000" data-y="5400">
+      <p>Final Remarks</p>
+      <ul>
+        <li>Know the language</li>
+        <li>Understand the window and document objects</li>
+        <li>Don't include libraries/Frameworks out of habit</li>
+      </ul><br />
+      <p>Much of this talk was stolen from <a href="https://www.youtube.com/watch?v=FbpUt3XLGlE">You Don't Need a Framework for That</a> by Estelle Weyl</p>
+    </div>
+
+</div>
+<script>
+if ("ontouchstart" in document.documentElement) { 
+    document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+}
+</script>
+<script src="js/impress.js"></script>
+<script src="js/highlight.pack.js"></script>
+<script>
+  impress().init();
+  hljs.initHighlightingOnLoad();
+</script>
+
+</body>
+</html>

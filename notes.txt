@@ -1,0 +1,41 @@
+Intro - 5 minutes
+* How I got here
+** todo
+** JStGP
+Patterns
+* Function Overloading - 5 Minutes
+** Argument overloading
+** 'arguments' object
+* Object Literals - 2 Minutes
+** property bag (and accessors)
+** methods
+** namespace
+** ??? NEEDS MORE
+* Prototypes - 10 minutes
+** constructors
+** this
+** basic
+** inheritance
+** for..in iterating
+** overriding and prototype chain
+* Closures - 7 Minutes
+** basic
+** getter/setter
+** private
+* Declare and Execute - 4 Minutes
+** Basic
+** Setting UI properties
+** function builder
+* Object Builder - 7 minutes
+** basic
+** With Declare and execute
+** Parasitic Inheritence
+* Monkey Patch - 4 minutes
+** array
+** date
+** object
+* Closing - 3 minutes
+
+Todo:
+- test every demo link
+- change demos to use console

@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Private Via Closure</title>
+  </head>
+  <body>
+    <script>
+      function Incrementer(){
+        var _i = 0;
+        this.val = function(){
+          var i = _i;
+          _i += 1;
+          return i;
+        };
+      }
+      
+      var inc = new Incrementer();
+      console.log(inc.val());
+      console.log(inc.val());
+      console.log(inc.val());
+    </script>
+  </body>
+</html>

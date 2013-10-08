@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Argument Types</title>
+  </head>
+  <body>
+    <script>
+      function getShortMonth(date){
+        var shortMonths = [
+          'Jan', 'Feb', 'Mar',
+          'Apr', 'May', 'Jun',
+          'Jul', 'Aug', 'Sep',
+          'Oct', 'Nov', 'Dec'];
+        if (typeof(date) === "string") date = new Date(date);
+        if ( (date instanceof Date) ||
+             ("getMonth" in date) ){
+          return shortMonths [ date.getMonth() ];
+        }
+      }
+      
+      console.log( getShortMonth("December 31, 2017") );
+      console.log( getShortMonth(new Date(2017, 09, 31)) );
+    </script>
+  </body>
+</html>

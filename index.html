@@ -1,0 +1,533 @@
+<!--
+- change everything back to console.log
+- remove unused demos
+-->
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Bare Metal JavaScript Patterns</title>
+    
+    <meta name="description" content="JavaScript frameworks and libraries are great - and you should use them - but to use them well you must understand plain-old-javascript" />
+    <meta name="author" content="Adam Colton" />
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+    <link href="css/impress-demo.css" rel="stylesheet" />
+    <link href="css/poj.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/highlight/default.css">
+    
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+</head>
+
+<body class="impress-not-supported">
+
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+
+<div id="impress">
+    <div class="step slide" data-x="0" data-y="0">
+        <h1>Bare Metal JavaScript Patterns</h1>
+        <img src='bearMetal.jpg' id="bearMetal" />
+        <div class="bottom">
+          <p>Adam Colton</p>
+          <p><a href='http://www.adamcolton.net'>www.adamcolton.net</a></p>
+          <p>adamcolton@gmail.com</p>
+        </div>
+    </div>
+    
+    <div class="step slide" data-x="1000" data-y="0">
+      <h2>Target Audience</h2>
+      <ul>
+        <li>Comfortable with JavaScript</li>
+        <li>Write JavaScript</li>
+      </ul>
+      <br />
+      <p>Goal</p>
+      <ul>
+        <li>Better Understand the language</li>
+        <li>Use patterns in your code</li>
+      </ul>
+      <br />
+      <p>Please De-rail Me</p>
+      <ul>
+        <li>I'm going to skip most Demos</li>
+        <li>Interaction is better than monolog</li>
+        <li>Everything is up online</li>
+      </ul>
+    </div>
+    
+    <div class="step slide" data-x="2000" data-y="0">
+      <h2>Inspiration</h2>
+      <p><a href="https://www.youtube.com/watch?v=FbpUt3XLGlE">You Don't Need a Framework for That</a> by Estelle Weyl. That talk was focused on front end techniques, I chose to focus and architecture.</p>
+      <p>Need new patterns for data driven applications.</p>
+    </div>
+    
+    <div class="step slide" data-x="0" data-y="900">
+      <h1>Pattern 1: Argument Overloading</h1>
+    </div>
+    
+    <div class="step slide" data-x="1000" data-y="900">
+      <h2>Optional Argument</h2>
+<pre><code language='javascript'>var SayHello = function(name){
+  var hello = "Hello";
+  if ( name !== undefined ){
+    hello += ", my name is " + name;
+  }
+  console.log(hello);
+}
+
+SayHello(); // Hello
+SayHello("Joe"); //Hello, my name is Joe</code></pre>
+      <a href='demos/optionalArguments.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="2000" data-y="900">
+      <h2>Argument Types</h2>
+<pre><code language='javascript'>function getShortMonth(date){
+  var shortMonths = [
+    'Jan', 'Feb', 'Mar',
+    'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep',
+    'Oct', 'Nov', 'Dec'];
+  if (typeof(date) === "string") date = new Date(date);
+  if ( (date instanceof Date) ||
+       ("getMonth" in date) ){
+    return shortMonths [ date.getMonth() ];
+  }
+}
+
+console.log( getShortMonth("December 31, 2017") );
+console.log( getShortMonth(new Date(2017, 09, 31)) );</code></pre>
+      <a href='demos/argumentTypes.html' target="_blank" class='demolink'>Demo</a>
+      <ul>
+        <li>typeof</li>
+        <li>instanceof</li>
+        <li>in</li>
+      </ul>
+    </div>
+    
+    <div class="step slide" data-x="3000" data-y="900">
+      <h2>Arguments Object</h2>
+<pre><code language='javascript'>var sum = function(){
+  var l = arguments.length;
+  var sum = 0;
+  var i;
+  for (i=0; i&lt;l; i += 1){
+    sum += arguments[i];
+  }
+  return sum;
+}
+
+console.log(sum(1,2,3,4,5));</code></pre>
+      <a href='demos/argumentsObject.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="0" data-y="1800">
+      <h1>Pattern 2: Object Literals</h1>
+    </div>
+    
+    <div class="step slide" data-x="1000" data-y="1800">
+      <h2>Basic Object</h2>
+<pre><code language='javascript'>var foo = {
+  'attribute': 'I am an attribute',
+  'number': 3.1415,
+  'object': new Date("August 13, 1984"),
+  'computed': Math.random()
+};
+console.log(foo.attribute + ", ");
+console.log(foo['attribute'] + ", ");</code></pre>
+      <a href='demos/objectLiteral.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="2000" data-y="1800">
+      <h2>Object Literal Methods</h2>
+<pre><code language='javascript'>var foo = {
+  'val': 22,
+  'square': function(){
+    return this.val * this.val;
+  }
+}
+
+console.log(foo.square());</code></pre>
+      <a href='demos/methodDemo.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="0" data-y="2700">
+      <h1>Pattern 3: Prototypes</h1>
+    </div>
+    
+    <div class="step slide" data-x="1000" data-y="2700">
+      <h2>Constructor Function</h2>
+<pre><code language='javascript'>function Person(name){
+  this.name = name;
+}
+
+var bob = new Person("Bob");
+console.log(bob.name);</code></pre>
+      <a href='demos/constructorFunction.html' target="_blank" class='demolink'>Demo</a>
+      <ul>
+        <li>new</li>
+        <li>this</li>
+      </ul>
+    </div>
+    
+    <div class="step slide" data-x="2000" data-y="2700">
+      <h2>This</h2>
+        <pre><code language='javascript'>function identifyYourself(){
+  name = "identifyYourself";
+  console.log(this.name);
+}
+
+var obj = {
+  name: "obj",
+  identifyYourself: identifyYourself
+};
+
+var x = {};
+x.name = "x";
+      
+identifyYourself(); // identifyYourself
+obj.identifyYourself(); // obj
+identifyYourself.apply(x); // x</code></pre>
+      <a href='demos/thisDemo.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="3000" data-y="2700">
+      <h2>Basic Prototype</h2>
+        <pre><code language='javascript'>function Person(name){
+  this.name = name;
+}
+
+Person.prototype.sayHello = function(){
+  console.log("Hello, my name is " + this.name);
+}
+
+var joe = new Person("Joe");
+joe.sayHello();</code></pre>
+      <a href='demos/prototypeDemo.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="4000" data-y="2700">
+      <h2>Prototype Inheiritance</h2>
+        <pre><code language='javascript'>function Foo(name){
+  this.name = name;
+}
+
+Foo.prototype.sayHello = function(){
+  console.log("Hello, my name is ", this.name);
+}
+
+function Bar(name, job){
+  this.name = name;
+  this.job = job;
+}
+Bar.prototype = new Foo();
+Bar.prototype.myJob = function(){
+  console.log("My job is ", this.job);
+}
+
+var bob = new Bar("Bob", "programmer");
+bob.sayHello();
+bob.myJob();</code></pre>
+      <a href='demos/prototypeInheritance.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="5000" data-y="2700">
+      <h2>For...In</h2>
+        <pre><code language='javascript'>function Person(name, age){
+  this.name = name;
+  this.age = age;
+}
+
+Person.prototype.species = "human";
+
+Person.prototype.displayOwnProperties = function(){
+  var dispArr;
+  for(property in this){
+    if (this.hasOwnProperty(property)){
+      console.log( property, ": ", this[property] );
+    }
+  }
+}
+
+var bob = new Person("Bob", 29);
+bob.displayOwnProperties();</code></pre>
+      <a href='demos/forInDemo.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="0" data-y="3600">
+      <h1>Pattern 4: Closures</h1>
+    </div>
+    
+    <div class="step slide" data-x="1000" data-y="3600">
+      <h2>Basic Closure</h2>
+<pre><code language='javascript'>function Foo(x){
+  this.getX = function(){ return x; }
+}
+
+var bar = new Foo(5);
+console.log(bar.getX());</code></pre>
+      <a href='demos/closureDemo.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="2000" data-y="3600">
+      <h2>Private Via Closure</h2>
+<pre><code language='javascript'>function Incrementer(){
+  var _i = 0;
+  this.val = function(){
+    var i = _i;
+    _i += 1;
+    return i;
+  };
+}
+
+var inc = new Incrementer();
+console.log(inc.val());
+console.log(inc.val());
+console.log(inc.val());</code></pre>
+      <a href='demos/privateClosure.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="3000" data-y="3600">
+      <h2>Getter Setter</h2>
+<pre><code language='javascript'>function GetterSetter(){
+  var _x = 0;
+  this.get = function(){ return _x; }
+  this.set = function(setX){
+    if (typeof(setX) === "number" && setX >= 0){
+      _x = setX;
+    }
+  }
+}
+
+var gs = new GetterSetter();
+gs.set(10);
+console.log( gs.get() );
+gs.set(5);
+console.log( gs.get() );
+gs.set(-1);
+console.log( gs.get() );</code></pre>
+      <a href='demos/closureGetterSetterDemo.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="0" data-y="4500">
+      <h1>Pattern 5: Declare and Execute</h1>
+    </div>
+    
+    <div class="step slide" data-x="1000" data-y="4500">
+      <h2>Avoiding Globals</h2>
+<pre><code language='javascript'>(function(){
+  var alertText = "not in global space";
+  console.log(alertText);
+}());</code></pre>
+      <a href='demos/declareAndExecute.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="2000" data-y="4500">
+      <h2>Setting UI</h2>
+<pre><code language='javascript'>(function(){
+  var todayDiv = document.getElementById("today");
+  function updateTodayDiv(){
+    var today = new Date();
+    todayDiv.innerHTML = today.toString();
+  }
+  todayDiv.onclick = updateTodayDiv;
+  updateTodayDiv();
+}())</code></pre>
+      <a href='demos/setUIproperties.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="3000" data-y="4500">
+      <h2>Function Builder</h2>
+<pre><code language='javascript'>var Email = (function(){
+  var _emailRegex = /^[A-Z0-9.]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i;
+  return function(email){
+    this.email = email;
+    this.isValid = function(){
+      return _emailRegex.test(email);
+    };
+  };
+}());
+
+var validEmail = new Email("a.colton@techsmith.com");
+var notValidEmail = new Email("@twitterHandle");
+
+console.log(validEmail.isValid());
+console.log(notValidEmail.isValid());</code></pre>
+      <a href='demos/functionBuilder.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="0" data-y="5400">
+      <h1>Pattern 6: Object Builder</h1>
+    </div>
+    
+    <div class="step slide" data-x="1000" data-y="5400">
+      <h2>Object Builder</h2>
+<pre><code language='javascript'>var Person = function(name){
+  var _self = {};
+  _self.name = function(){
+    return name;
+  };
+  return _self;
+}
+
+var bob = Person("Bob");
+console.log(bob.name());</code></pre>
+      <a href='demos/objectBuilder.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="2000" data-y="5400">
+      <h2>Object Builder with Declare and Execute</h2>
+<pre><code language='javascript'>var Person = (function(){
+  var _emailRegex = /^[A-Z0-9.]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i;
+  return function(name, email){
+    var _self = {};
+    _self.name = function(){ return name; };
+    _self.email = function(){ return email; };
+    _self.emailIsValid = function(){
+      return _emailRegex.test(email);
+    };
+    return _self;
+  };
+}());
+
+var adam = Person("Adam", "a.colton@techsmith.com");
+console.log( adam.name() );
+console.log( adam.emailIsValid() );</code></pre>
+      <a href='demos/objectBuilderWrapper.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="3000" data-y="5400">
+      <h2>Parasitic Inheiritance</h2>
+<pre><code language='javascript'>function Person(name){
+  var _self = {};
+  _self.name = function(){ return name; };
+  return _self;
+}
+
+function Programmer(name, language){
+  var _self = Person(name);
+  _self.language = function(){ return language; };
+  _self.summary = function(){
+    return name + " primarily writes in " + language;
+  };
+  return _self;
+}
+
+var bob = Programmer("Bob", "Cobol");
+console.log(bob.name());
+console.log(bob.summary());</code></pre>
+      <a href='demos/parasiticDemo.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="0" data-y="6300">
+      <h1>Pattern 7: Monkey Patch</h1>
+      <h1>(a.k.a Duck Punching)</h1>
+    </div>
+    
+    <div class="step slide" data-x="1000" data-y="6300">
+      <h2>Date</h2>
+<pre><code language='javascript'>Date.prototype.getShortMonth = function(){
+  var _shortMonths = [
+    'Jan', 'Feb', 'Mar',
+    'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep',
+    'Oct', 'Nov', 'Dec'];
+  return function(){
+    return _shortMonths[this.getMonth()];
+  };
+}();
+
+var today = new Date();
+console.log( today.getShortMonth() );</code></pre>
+      <a href='demos/monkeyPatchDate.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="2000" data-y="6300">
+      <h2>Array</h2>
+<pre><code language='javascript'>Array.prototype.remove = function(val){
+  var i = this.indexOf(val);
+  return this.slice(0,i).concat(this.slice(i+1));
+}
+
+Array.prototype.copy = function(){
+  return this.slice(0);
+}
+
+var arr = [1,2,3,4,5,6];
+console.log( arr.remove(3) );</code></pre>
+      <a href='demos/monkeyPatchArray.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="3000" data-y="6300">
+      <h2>Object</h2>
+<pre><code language='javascript'>Object.prototype.method = function(name, func){
+  this.prototype[name] = func;
+};
+
+function Person(name){
+  if (!(this instanceof Person)) return new Person(name);
+  this.name = name;
+}
+
+Person.method("sayHello", function(){
+  console.log("Hello, my name is ", this.name);
+});
+
+var bob = Person("Bob");
+bob.sayHello();</code></pre>
+      <a href='demos/objectMonkeyPatch.html' target="_blank" class='demolink'>Demo</a>
+    </div>
+    
+    <div class="step slide" data-x="0" data-y="7200">
+      <h1>Closing</h1>
+    </div>
+    
+    <div class="step slide" data-x="1000" data-y="7200">
+      <h2>Know The Environment</h2>
+      <ul>
+        <li>Not Classical OO</li>
+        <li>Requires a different set of tools</li>
+      </ul>
+    </div>
+    
+    <div class="step slide" data-x="2000" data-y="7200">
+      <h2>Know The Patterns</h2>
+      <ul>
+        <li>How to Read them</li>
+        <li>How to Use them</li>
+        <li>Good litmus test for the language</li>
+      </ul>
+    </div>
+    
+    <div class="step slide" data-x="3000" data-y="7200">
+      <h2>Follow Up</h2>
+      <ul>
+        <li>https://github.com/AdamColton/PlainOldJavascript</li>
+        <li>Follow up any time</li>
+        <li>Questions?</li>
+      </ul>
+    </div>
+
+</div>
+<script>
+if ("ontouchstart" in document.documentElement) { 
+    document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+}
+</script>
+<script src="js/impress.js"></script>
+<script src="js/highlight.pack.js"></script>
+<script>
+  impress().init();
+  hljs.initHighlightingOnLoad();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Prototype Inheritance</title>
+  </head>
+  <body>
+    <script>
+      function Foo(name){
+        this.name = name;
+      }
+      
+      Foo.prototype.sayHello = function(){
+        console.log("Hello, my name is ", this.name);
+      }
+      
+      function Bar(name, job){
+        this.name = name;
+        this.job = job;
+      }
+      Bar.prototype = new Foo();
+      Bar.prototype.myJob = function(){
+        console.log("My job is ", this.job);
+      }
+      
+      var bob = new Bar("Bob", "programmer");
+      bob.sayHello();
+      bob.myJob();
+    </script>
+  </body>
+</html>

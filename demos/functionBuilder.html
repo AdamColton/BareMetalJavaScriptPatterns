@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Function Builder</title>
+  </head>
+  <body>
+    <script>
+      var Email = (function(){
+        var _emailRegex = /^[A-Z0-9.]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i;
+        return function(email){
+          this.email = email;
+          this.isValid = function(){ return _emailRegex.test(email); };
+        };
+      }());
+      
+      var validEmail = new Email("a.colton@techsmith.com");
+      var notValidEmail = new Email("@twitterHandle");
+      
+      console.log(validEmail.isValid());
+      console.log(notValidEmail.isValid());
+    </script>
+  </body>
+</html>

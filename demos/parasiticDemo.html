@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <script>
+      function Person(name){
+        var _self = {};
+        _self.name = function(){ return name; };
+        return _self;
+      }
+      
+      function Programmer(name, language){
+        var _self = Person(name);
+        _self.language = function(){ return language; };
+        _self.summary = function(){
+          return name + " primarily writes in " + language;
+        };
+        return _self;
+      }
+      
+      var bob = Programmer("Bob", "Cobol");
+      console.log(bob.name());
+      console.log(bob.summary());
+    </script>
+  </body>
+</html>

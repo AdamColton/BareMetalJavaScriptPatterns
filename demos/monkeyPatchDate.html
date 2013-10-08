@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Monkey Patch Date</title>
+  </head>
+  <body>
+    <script>
+      Date.prototype.getShortMonth = function(){
+        var _shortMonths = [
+          'Jan', 'Feb', 'Mar',
+          'Apr', 'May', 'Jun',
+          'Jul', 'Aug', 'Sep',
+          'Oct', 'Nov', 'Dec'];
+        return function(){
+          return _shortMonths[this.getMonth()];
+        };
+      }();
+      
+      var today = new Date();
+      console.log( today.getShortMonth() );
+    </script>
+  </body>
+</html>

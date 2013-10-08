@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Optional Argument</title>
+  </head>
+  <body>
+    <script>
+      var SayHello = function(name){
+        var hello = "Hello";
+        if ( name !== undefined ){
+          hello += ", my name is " + name;
+        }
+        console.log(hello);
+      }
+      
+      SayHello();
+      SayHello("Joe");
+    </script>
+  </body>
+</html>

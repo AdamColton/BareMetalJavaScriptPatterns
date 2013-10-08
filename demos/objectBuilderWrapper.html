@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Object Builder with Declare and Execute</title>
+  </head>
+  <body>
+    <script>
+      var Person = (function(){
+        var _emailRegex = /^[A-Z0-9.]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i;
+        return function(name, email){
+          var _self = {};
+          _self.name = function(){ return name; };
+          _self.email = function(){ return email; };
+          _self.emailIsValid = function(){
+            return _emailRegex.test(email);
+          };
+          return _self;
+        };
+      }());
+      
+      var adam = Person("Adam", "a.colton@techsmith.com");
+      console.log( adam.name() );
+      console.log( adam.emailIsValid() );
+    </script>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <script>
+    var sum = function(){
+      var l = arguments.length;
+      var sum = 0;
+      var i;
+      for (i=0; i<l; i += 1){
+        sum += arguments[i];
+      }
+      return sum;
+    }
+
+    console.log(sum(1,2,3,4,5));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <title>For...In</title>
+  </head>
+  <body>
+    <script>
+      function Person(name, age){
+        this.name = name;
+        this.age = age;
+      }
+      
+      Person.prototype.species = "human";
+      
+      Person.prototype.displayOwnProperties = function(){
+        var dispArr;
+        for(property in this){
+          if (this.hasOwnProperty(property)){
+            console.log( property, ": ", this[property] );
+          }
+        }
+      }
+      
+      var bob = new Person("Bob", 29);
+      bob.displayOwnProperties();
+    </script>
+  </body>
+</html>

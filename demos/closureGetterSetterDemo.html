@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Closure Demo</title>
+  </head>
+  <body>
+    <script>
+      function GetterSetter(){
+        var _x = 0;
+        this.get = function(){ return _x; }
+        this.set = function(setX){
+          if (typeof(setX) === "number" && setX >= 0){
+            _x = setX;
+          }
+        }
+      }
+
+      var gs = new GetterSetter();
+      gs.set(10);
+      console.log( gs.get() );
+      gs.set(5);
+      console.log( gs.get() );
+      gs.set(-1);
+      console.log( gs.get() );
+    </script>
+  </body>
+</html>

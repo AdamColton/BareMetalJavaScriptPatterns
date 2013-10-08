@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Closure Demo</title>
+  </head>
+  <body>
+    <script>
+      function Foo(x){
+        this.getX = function(){ return x; }
+      }
+
+      var bar = new Foo(5);
+      console.log(bar.getX());
+    </script>
+  </body>
+</html>

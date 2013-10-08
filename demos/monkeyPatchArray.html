@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Monkey Patch Array</title>
+  </head>
+  <body>
+    <script>
+      Array.prototype.remove = function(val){
+        var i = this.indexOf(val);
+        return this.slice(0,i).concat(this.slice(i+1));
+      }
+      
+      Array.prototype.copy = function(){
+        return this.slice(0);
+      }
+      
+      var arr = [1,2,3,4,5,6];
+      console.log( arr.remove(3) );
+    </script>
+  </body>
+</html>

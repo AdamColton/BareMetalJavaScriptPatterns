@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Closure as Object Builder</title>
+  </head>
+  <body>
+    <script>
+      var Person = function(name){
+        var _self = {};
+        _self.name = function(){
+          return name;
+        };
+        return _self;
+      }
+      
+      var bob = Person("Bob");
+      console.log(bob.name());
+    </script>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Set UI Properties</title>
+  </head>
+  <body>
+    <div id="today"></div>
+    <script>
+      (function(){
+        var todayDiv = document.getElementById("today");
+        function updateTodayDiv(){
+          var today = new Date();
+          todayDiv.innerHTML = today.toString();
+        }
+        todayDiv.onclick = updateTodayDiv;
+        updateTodayDiv();
+      }())
+    </script>
+  </body>
+</html>
