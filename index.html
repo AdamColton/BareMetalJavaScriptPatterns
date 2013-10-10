@@ -249,10 +249,10 @@ bob.myJob();</code></pre>
 Person.prototype.species = "human";
 
 Person.prototype.displayOwnProperties = function(){
-  var dispArr;
-  for(property in this){
-    if (this.hasOwnProperty(property)){
-      console.log( property, ": ", this[property] );
+  var attribute;
+  for(attribute in this){
+    if (this.hasOwnProperty(attribute)){
+      console.log( attribute, ": ", this[attribute] );
     }
   }
 }
